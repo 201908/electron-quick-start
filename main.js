@@ -1,12 +1,16 @@
+// 主进程中执行
+// 在这个文件中，你可以续写应用剩下主进程代码。
+
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, globalShortcut } = require('electron')
+
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -20,7 +24,7 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -35,6 +39,14 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+app.on('ready', () => {
+  // Register a 'CommandOrControl+Y' shortcut listener.
+  globalShortcut.register('CommandOrControl+Y', () => {
+    // Do stuff when Y and either Command/Control is pressed.
+    console.log(444)
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
