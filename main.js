@@ -2,7 +2,7 @@
 // 在这个文件中，你可以续写应用剩下主进程代码。
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, globalShortcut } = require('electron')
+const { app, BrowserWindow, globalShortcut, ipcMain } = require('electron')
 
 const path = require('path')
 
@@ -16,6 +16,7 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js')
     }
   })
@@ -63,3 +64,8 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+
+ipcMain.on('close-main-window', function () {
+  app.quit();
+});
