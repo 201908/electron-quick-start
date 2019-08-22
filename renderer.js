@@ -16,3 +16,9 @@ myNotification.onclick = () => {
 
 const { app } = require('electron').remote
 console.log(app.getVersion())
+const { ipcRenderer } = require('electron')
+
+var closeEl = document.querySelector('.close');
+closeEl.addEventListener('click', function () {
+  ipcRenderer.send('close-main-window');
+}); 
