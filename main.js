@@ -3,7 +3,9 @@
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, globalShortcut, ipcMain } = require('electron')
-
+global.globalData = {
+  test: "testdata"
+}
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -17,6 +19,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      webviewTag: true,
       preload: path.join(__dirname, 'preload.js')
     }
   })
